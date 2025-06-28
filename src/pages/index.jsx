@@ -24,11 +24,17 @@ document.querySelector('#root').innerHTML = render(
 
 
 const navBtn = document.querySelector('.nav-btn')
-const navMenu = document.querySelector('.rollout-nav')
+const rolloutNav = document.querySelector('.rollout-nav')
 
 navBtn.addEventListener('click', () => {
-  navMenu.classList.toggle('nav-closed')
+  rolloutNav.classList.toggle('nav-closed')
 }) 
+
+rolloutNav.addEventListener('click', (event) => {
+  if (event.target.tagName === 'A') {
+    rolloutNav.classList.add('nav-closed')
+  }
+})
 
 
 
