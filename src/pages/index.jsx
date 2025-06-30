@@ -9,6 +9,7 @@ import { Contact } from '../components/Contact';
 import { Footer } from '../components/Footer'
 
 
+
 document.querySelector('#root').innerHTML = render(
   <div className="page">
     <Header />
