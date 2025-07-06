@@ -37,30 +37,28 @@ rolloutNav.addEventListener('click', (event) => {
   }
 })
 
-const orderDrink = async (e) => {
-  e.preventDefault()
-const form = e.target.closest('form')
-  const id = form.dataset.id
 
-  console.log(`Kliknuto na nápoj s ID: ${id}`)
+const orderDrink = document.querySelectorAll('.drink__controls')
+orderDrink.forEach((form) => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const drinkId = Number(e.target.dataset.id)
 
-  const response = await fetch(`http://localhost:4000/api/drinks/${id}`, {
+    const isOrdered = form.dataset.ordered === 'true'
+    const orderValue = !isOrdered
+
+    const response = await fetch(`http://localhost:4000/api/drinks/${drinkId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify([
-        { op: 'replace', path: '/ordered', value: true },
+        { op: 'replace', path: '/ordered', value: orderValue },
       ]), 
-})
- if (!response.ok) {
-  alert('Něco se nepovedlo, zkuste to za chvíli znovu.')
- } else {
-  window.location.reload()
- }}
-
-document
-  .querySelectorAll('.drink__controls')
-  .forEach((form) => {
-    form.addEventListener('click', orderDrink)
   })
+  const data = await response.json()
+
+  window.location.reload()
+})
+
+})
